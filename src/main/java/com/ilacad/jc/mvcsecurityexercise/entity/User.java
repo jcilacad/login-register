@@ -14,8 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +27,16 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="users_roles",
-               joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-               inverseJoinColumns = {@JoinColumn(name="ROLE_ID", referencedColumnName = "ID")}
+    @JoinTable(name = "users_roles",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}
     )
     private List<Role> roles = new ArrayList();
 
