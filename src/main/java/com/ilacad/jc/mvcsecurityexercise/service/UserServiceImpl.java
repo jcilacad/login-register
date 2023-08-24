@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
             role = result.get();
         } else {
             role = checkRoleExist();
-            throw new RuntimeException("Did not find role with role name of - " + role.getName());
         }
 
         user.setRoles(Arrays.asList(role));
@@ -55,13 +54,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
 
-        User user;
+        User user = null;
         Optional<User> result = userRepository.findByEmail(email);
 
         if (result.isPresent()) {
             user = result.get();
-        } else {
-            throw new RuntimeException("Did not find user with email - " + email);
         }
 
         return user;
