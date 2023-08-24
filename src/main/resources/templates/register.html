@@ -31,33 +31,38 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-5">Sign up now</h2>
-                    <form>
+                    <form th:object="${user}" th:action="@{/register}" method="POST">
                         <!-- Your form content here -->
 
                         <!-- 2 column grid layout with text inputs for the first and last names -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
-                                    <input type="text" id="form3Example1" class="form-control"
+                                    <input th:field="*{firstName}" type="text" id="form3Example1" class="form-control"
                                            placeholder="First name"/>
+                                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control" placeholder="Last name"/>
+                                    <input th:field="*{lastName}" type="text" id="form3Example2" class="form-control" placeholder="Last name"/>
+                                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="form3Example3" class="form-control" placeholder="Email address"/>
+                            <input th:field="*{email}" type="email" id="form3Example3" class="form-control" placeholder="Email address"/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" id="form3Example4" class="form-control" placeholder="Password"/>
+                            <input th:field="*{password}" type="password" id="form3Example4" class="form-control" placeholder="Password"/>
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></p>
                         </div>
+
 
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary btn-block mb-4">
@@ -66,7 +71,7 @@
 
                         <!-- Register buttons -->
                         <div class="text-center">
-                            <p>Have already an account? <span><a href="">Sign In</a></span></p>
+                            <p>Have already an account? <span><a th:href="@{/login}">Sign In</a></span></p>
 
                         </div>
                     </form>
