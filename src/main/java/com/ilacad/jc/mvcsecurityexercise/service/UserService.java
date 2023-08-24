@@ -12,4 +12,6 @@ public interface UserService {
     User findUserByEmail(String email);
 
     List<UserDto> findAll();
+
+    boolean isUserExists(UserDto user);
 }

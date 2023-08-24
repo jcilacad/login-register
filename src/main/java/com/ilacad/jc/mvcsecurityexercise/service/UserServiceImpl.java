@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    private UserDto mapUserToDto (User user) {
+    private UserDto mapUserToDto(User user) {
 
         UserDto userDto = new UserDto();
         String[] name = user.getName().split(" ");
@@ -95,5 +95,14 @@ public class UserServiceImpl implements UserService{
         Role role = new Role();
         role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
+    }
+
+    @Override
+    public boolean isUserExists(UserDto user) {
+
+        String email = user.getEmail();
+        User findUser = findUserByEmail(email);
+
+        return (findUser != null && findUser.getEmail() != null && !findUser.getEmail().isEmpty());
     }
 }
