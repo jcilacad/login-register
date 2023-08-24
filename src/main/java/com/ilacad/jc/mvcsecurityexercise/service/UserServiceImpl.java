@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -50,20 +51,48 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+
+        User user;
+        Optional<User> result = userRepository.findByEmail(email);
+
+        if (result.isPresent()) {
+            user = result.get();
+        } else {
+            throw new RuntimeException("Did not find user with email - " + email);
+        }
+
+        return user;
+    }
+
+    @Override
+    public List<UserDto> findAll() {
+        List<User> userList = userRepository.findAll();
+
+        return userList.stream()
+                .map(user -> mapUserToDto(user))
+                .collect(Collectors.toList());
+
+    }
+
+    private UserDto mapUserToDto (User user) {
+
+        UserDto userDto = new UserDto();
+        String[] name = user.getName().split(" ");
+
+        userDto.setFirstName(name[0]);
+        userDto.setLastName(name[1]);
+        userDto.setEmail(user.getEmail());
+
+        return userDto;
+
+    }
+
     private Role checkRoleExist() {
 
         Role role = new Role();
         role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public List<UserDto> findAll() {
-        return null;
     }
 }
