@@ -45,6 +45,7 @@ public class AuthControllerSecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll()
 
                 );
