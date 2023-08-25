@@ -29,6 +29,11 @@ public class AuthController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
 
@@ -38,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registration (@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
+    public String registration(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
 
         boolean isUserExists = userService.isUserExists(user);
 
@@ -48,7 +53,7 @@ public class AuthController {
 
         if (result.hasErrors()) {
             model.addAttribute("user", user);
-            return "/register";
+            return "register";
         }
 
         userService.saveUser(user);
@@ -58,7 +63,7 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public String users (Model model) {
+    public String users(Model model) {
 
         List<UserDto> userDtoList = userService.findAll();
         model.addAttribute("users", userDtoList);
