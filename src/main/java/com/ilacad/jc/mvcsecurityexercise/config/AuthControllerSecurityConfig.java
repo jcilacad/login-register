@@ -1,4 +1,4 @@
-package com.ilacad.jc.mvcsecurityexercise.security;
+package com.ilacad.jc.mvcsecurityexercise.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
