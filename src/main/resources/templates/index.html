@@ -39,6 +39,10 @@
                     </li>
 
                     <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/users}">Registered Users</a>
+                    </li>
+
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a class="nav-link" th:href="@{/logout}">Logout</a>
                     </li>
 
