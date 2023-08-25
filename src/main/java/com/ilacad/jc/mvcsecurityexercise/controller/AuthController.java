@@ -2,8 +2,12 @@ package com.ilacad.jc.mvcsecurityexercise.controller;
 
 import com.ilacad.jc.mvcsecurityexercise.dto.UserDto;
 import com.ilacad.jc.mvcsecurityexercise.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +34,15 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (userService.isUserAuthenticated(authentication)) {
+            return "login";
+        }
+
+        return "redirect:/users";
+
     }
 
     @GetMapping("/register")
@@ -38,7 +50,14 @@ public class AuthController {
 
         UserDto user = new UserDto();
         model.addAttribute("user", user);
-        return "register";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (userService.isUserAuthenticated(authentication)) {
+            return "register";
+        }
+
+        return "redirect:/users";
     }
 
     @PostMapping("/register")

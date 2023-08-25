@@ -35,8 +35,9 @@ public class AuthControllerSecurityConfig {
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/index/**").permitAll()
-                        .requestMatchers("/register/**").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers("/users/**").hasRole("ADMIN")
+
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

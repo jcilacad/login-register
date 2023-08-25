@@ -6,6 +6,8 @@ import com.ilacad.jc.mvcsecurityexercise.entity.User;
 import com.ilacad.jc.mvcsecurityexercise.repository.RoleRepository;
 import com.ilacad.jc.mvcsecurityexercise.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -100,5 +102,10 @@ public class UserServiceImpl implements UserService {
         User findUser = findUserByEmail(email);
 
         return (findUser != null && findUser.getEmail() != null && !findUser.getEmail().isEmpty());
+    }
+
+    @Override
+    public boolean isUserAuthenticated(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 }
